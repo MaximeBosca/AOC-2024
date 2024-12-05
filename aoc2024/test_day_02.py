@@ -1,6 +1,6 @@
 import pytest
 
-from day_02 import is_report_safe
+from aoc2024.day_02 import is_report_safe
 
 
 @pytest.mark.parametrize("test_input,expected", [
