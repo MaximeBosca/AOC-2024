@@ -1,6 +1,6 @@
 import pytest
 
-from day_2.day_2 import is_report_safe
+from day_02 import is_report_safe
 
 
 @pytest.mark.parametrize("test_input,expected", [
@@ -18,9 +18,9 @@ from day_2.day_2 import is_report_safe
     ([1, 2, 3, 2], True),
     ([4, 2, 1, 4, 6, 5], False),
 ])
-def test_is_report_safe(test_input, expected):
+def test_is_report_safe(test_input, expected: bool):
     assert is_report_safe(test_input) == expected
 
 
 def test_is_safe():
-    assert is_report_safe([4, 5, 4, 3, 2, 1]) == True
+    assert is_report_safe([4, 5, 4, 3, 2, 1]) is True

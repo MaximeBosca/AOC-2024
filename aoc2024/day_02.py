@@ -1,3 +1,8 @@
+from aoc2024.commons import load_data
+
+DAY_NUMBER = '02'
+
+
 def valid_levels(previous_level: int, current_level: int, increasing: bool):
     difference = previous_level - current_level
     if (increasing and difference >= 0) or (not increasing and difference <= 0):
@@ -48,15 +53,23 @@ def is_report_safe(report: list[int]) -> bool:
     return True
 
 
-def main():
+def solve_part_one(data: str) -> int:
+    return 0
+
+
+def solve_part_two(data: str) -> int:
     safe_reports = 0
-    with open('input.txt', 'r') as file:
-        for line in file:
-            report_str = line.strip().split(" ")
-            safe_reports += 1 if is_report_safe([int(level) for level in report_str]) else 0
-            if (not is_report_safe([int(level) for level in report_str])):
-                print(report_str)
-    print(safe_reports)
+    lines = data.strip().split('\n')
+    for line in lines:
+        report_str = line.strip().split(" ")
+        safe_reports += 1 if is_report_safe([int(level) for level in report_str]) else 0
+    return safe_reports
+
+
+def main():
+    data = load_data(DAY_NUMBER)
+    print('Part one solved :', solve_part_one(data))
+    print('Part two solved :', solve_part_two(data))
 
 
 if __name__ == '__main__':
