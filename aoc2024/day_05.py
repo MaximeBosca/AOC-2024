@@ -58,19 +58,34 @@ def solve_part_one(data: str) -> int:
 
 
 def reorder(update: list[int], rules_before: dict[int, list[int]], rules_after: dict[int, list[int]]) -> list[int]:
-    unknown = update[1:].copy()
+    # This is a simple insert sort with a twist, not very efficient but easy to implement (kinda)
+    # We have a twist because we have a compare() method that can return ? or "can't compare".
+    # If no rules exist concerning our two pages. Case is partially dalt with in this sort (see 'TODO')
+
+    # First page is sorted by default
     reordered = [update[0]]
+    # All other pages are not sorted
+    unknown = update[1:].copy()
     while len(unknown) != 0:
+        # Let's sort page, first of the unsorted pages
         page = unknown.pop(0)
+        # Get the pages before and after current page from the rules
         pages_before = rules_before.setdefault(page, [])
         pages_after = rules_after.setdefault(page, [])
+        # Compare current page to already sorted pages
         for index, other in enumerate(reordered):
             is_other_before = other in pages_before
             is_other_after = other in pages_after
             if (not is_other_before) and (not is_other_after):
+                # Don't know how to place page with the current sorted other
+                # We place the page back at the end of unknown pages
+                # TODO : What if we already have sorted 1, 2, 3 we get 4, we have the rules 3|4 but not 2|4 ?
+                #  might be an infinite loop right there..
+                #  Did not need it for the challenge tho.
                 unknown.append(page)
                 break
             if is_other_after:
+                # First time we find
                 reordered.insert(index, page)
                 break
             if index == len(reordered) - 1:
