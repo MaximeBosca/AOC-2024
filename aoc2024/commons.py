@@ -1,3 +1,6 @@
-def load_data(day_number: str, prefix: str = ''):
-    with open('../data/{prefix}input_{day_number:0>2}.txt'.format(day_number=day_number, prefix=prefix), 'r') as file:
-        return file.read()
+from pathlib import Path
+
+
+def load_data(day_number: str, prefix: str = '') -> str:
+    pathname = Path(__file__).parent.parent / 'data' / f"{prefix}input_{day_number:02}.txt"
+    return pathname.read_text()
