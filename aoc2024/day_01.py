@@ -1,4 +1,4 @@
-from aoc2024.commons import load_data
+from aoc2024.commons import load_data, time_function, beautify_time_ns
 
 DAY_NUMBER = '01'
 
@@ -45,8 +45,10 @@ def solve_part_two(data: str) -> int:
 
 def main():
     data = load_data(DAY_NUMBER)
-    print('Part one solved :', solve_part_one(data))
-    print('Part two solved :', solve_part_two(data))
+    result, time_ns = time_function(solve_part_one, data)
+    print('Part one solved in {0}. Result is {1}'.format(beautify_time_ns(time_ns), result))
+    result, time_ns = time_function(solve_part_two, data)
+    print('Part two solved in {0}. Result is {1}'.format(beautify_time_ns(time_ns), result))
 
 
 if __name__ == '__main__':
