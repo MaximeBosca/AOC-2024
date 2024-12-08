@@ -21,24 +21,24 @@ def solve_part_two(data: str) -> int:
     similarity_score = 0
 
     previous_number = 0
-    previous_occurences = 0
+    previous_occurrences = 0
     right_index = 0
     for i in range(len(left_list)):
         current_number = left_list[i]
         if current_number == previous_number:
-            similarity_score += previous_occurences * previous_number
+            similarity_score += previous_occurrences * previous_number
             continue
-        occurences = 0
+        occurrences = 0
         while right_index < len(right_list) and right_list[right_index] <= current_number:
             right_number = right_list[right_index]
             if right_number == current_number:
-                occurences += 1
+                occurrences += 1
             right_index += 1
 
-        similarity_score += previous_occurences * previous_number
+        similarity_score += previous_occurrences * previous_number
 
         previous_number = current_number
-        previous_occurences = occurences
+        previous_occurrences = occurrences
 
     return similarity_score
 
