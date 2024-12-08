@@ -164,9 +164,7 @@ def solve_part_two(data: str) -> int:
         new_map.add_obstacle(row, col)
         guard.reset(starting_col=starting_col, starting_row=starting_row, starting_direction=starting_direction)
         guard.map = new_map
-        if is_valid_obstruction(guard):
-            valid_obstructions += 1
-            print("({row}, {col})".format(row=row, col=col))
+        valid_obstructions += 1 if is_valid_obstruction(guard) else 0
     return valid_obstructions
 
 
