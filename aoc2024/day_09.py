@@ -26,7 +26,6 @@ def fill_empty_spot(remaining: Remaining, file_number: int, start_index: int) ->
 
 
 def solve_part_one(data: str) -> int:
-    print('Starting to solve')
     checksum = 0
     file_number = 0
     index = 0
@@ -57,7 +56,7 @@ def solve_part_one(data: str) -> int:
         if file_number >= end_file_number:
             break
     if remaining.remaining_file:
-        checksum += get_checksum(end_file_number, index, index+remaining.remaining_file)
+        checksum += get_checksum(end_file_number, index, index + remaining.remaining_file)
     return checksum
 
 
@@ -70,8 +69,50 @@ def sum_a_to_b(a: int, b: int) -> int:
     return (b * (b + 1) - a * (a - 1)) // 2
 
 
+class Empty:
+    def __init__(self, size, index):
+        self.size = size
+        self.index = index
+
+
 def solve_part_two(data: str) -> int:
-    return 0
+    empty_spaces = []
+    for empty_space_index in range(1, len(data), 2):
+        empty_size = int(data[empty_space_index])
+        empty_spaces.append(empty_size)
+
+    checksum = 0
+    file_number = 0
+    index = 0
+    is_file = True
+    total_size = len(data)
+    end_data_index = get_end_file_index(total_size)
+    end_file_number = get_end_file_number(total_size)
+    end_file_size = int(data[end_data_index])
+    remaining = Remaining(0, end_file_size)
+    for char in data:
+        size = int(char)
+        if is_file:
+            checksum += get_checksum(file_number=file_number, start_index=index, end_index=index + size)
+            file_number += 1
+        else:
+            remaining.remaining_space += size
+            fill_start_index = index
+            while remaining.remaining_space != 0:
+                checksum_to_add, filled_size = fill_empty_spot(remaining, end_file_number, fill_start_index)
+                fill_start_index += filled_size
+                checksum += checksum_to_add
+                if not remaining.remaining_file:
+                    end_file_number -= 1
+                    end_data_index -= 2
+                    remaining.remaining_file = int(data[end_data_index])
+        index += size
+        is_file = not is_file
+        if file_number >= end_file_number:
+            break
+    if remaining.remaining_file:
+        checksum += get_checksum(end_file_number, index, index + remaining.remaining_file)
+    return checksum
 
 
 def main():
