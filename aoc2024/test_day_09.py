@@ -6,7 +6,7 @@ from aoc2024.commons import load_data
 DAY_NUMBER = '09'
 TEST_PREFIX = 'test_'
 EXPECTED_PART_ONE = 1928
-EXPECTED_PART_TWO = 0
+EXPECTED_PART_TWO = 2858
 
 
 def test_part_one():

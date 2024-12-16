@@ -75,44 +75,37 @@ class Empty:
         self.index = index
 
 
-def solve_part_two(data: str) -> int:
-    empty_spaces = []
-    for empty_space_index in range(1, len(data), 2):
-        empty_size = int(data[empty_space_index])
-        empty_spaces.append(empty_size)
+class File:
+    def __init__(self, size, index, file_number):
+        self.size = size
+        self.index = index
+        self.file_number = file_number
 
+
+def solve_part_two(data: str) -> int:
+    empty_spaces, files = parse_data(data)
     checksum = 0
-    file_number = 0
-    index = 0
+    for file in reversed(files):
+        print(file.file_number)
+    return checksum
+
+
+def parse_data(data: str) -> tuple[list[Empty], list[File]]:
+    empty_spaces: list[Empty] = []
+    files: list[File] = []
     is_file = True
-    total_size = len(data)
-    end_data_index = get_end_file_index(total_size)
-    end_file_number = get_end_file_number(total_size)
-    end_file_size = int(data[end_data_index])
-    remaining = Remaining(0, end_file_size)
-    for char in data:
+    index = 0
+    file_number = 0
+    for char in data.strip():
         size = int(char)
         if is_file:
-            checksum += get_checksum(file_number=file_number, start_index=index, end_index=index + size)
+            files.append(File(size=size, index=index, file_number=file_number))
             file_number += 1
         else:
-            remaining.remaining_space += size
-            fill_start_index = index
-            while remaining.remaining_space != 0:
-                checksum_to_add, filled_size = fill_empty_spot(remaining, end_file_number, fill_start_index)
-                fill_start_index += filled_size
-                checksum += checksum_to_add
-                if not remaining.remaining_file:
-                    end_file_number -= 1
-                    end_data_index -= 2
-                    remaining.remaining_file = int(data[end_data_index])
+            empty_spaces.append(Empty(size=size, index=index))
         index += size
         is_file = not is_file
-        if file_number >= end_file_number:
-            break
-    if remaining.remaining_file:
-        checksum += get_checksum(end_file_number, index, index + remaining.remaining_file)
-    return checksum
+    return empty_spaces, files
 
 
 def main():
