@@ -82,11 +82,34 @@ class File:
         self.file_number = file_number
 
 
+def fill_space(file: File, empty: Empty) -> int:
+    checksum = get_checksum(file_number=file.file_number,
+                            start_index=empty.index,
+                            end_index=empty.index + file.size)
+    empty.index += file.size
+    empty.size -= file.size
+    return checksum
+
+
 def solve_part_two(data: str) -> int:
     empty_spaces, files = parse_data(data)
     checksum = 0
     for file in reversed(files):
-        print(file.file_number)
+        filled = False
+        for i, empty in enumerate(empty_spaces):
+            if empty.index > file.index:
+                break
+            if empty.size >= file.size:
+                checksum += fill_space(file, empty)
+                filled = True
+                if empty.size == 0:
+                    empty_spaces.pop(i)
+                break
+        if not filled:
+            checksum += get_checksum(file_number=file.file_number,
+                                     start_index=file.index,
+                                     end_index=file.index + file.size)
+
     return checksum
 
 

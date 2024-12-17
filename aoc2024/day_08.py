@@ -1,10 +1,9 @@
 from itertools import combinations
 
 from aoc2024.commons import load_data, time_function, beautify_time_ns
+from aoc2024.coordinates import Coord, get_bounds, is_in_bounds
 
 DAY_NUMBER = '08'
-
-Coord = tuple[int, int]
 
 
 def get_antennas(data: str) -> dict[str, list[Coord]]:
@@ -15,15 +14,6 @@ def get_antennas(data: str) -> dict[str, list[Coord]]:
             if character != '.':
                 antennas.setdefault(character, []).append((row, col))
     return antennas
-
-
-def get_bounds(data: str) -> Coord:
-    lines = data.strip().split('\n')
-    return len(lines), len(lines[0])
-
-
-def is_in_bounds(coord: Coord, bounds: Coord) -> bool:
-    return 0 <= coord[0] < bounds[0] and 0 <= coord[1] < bounds[1]
 
 
 def get_antinode_pair(combination: tuple[Coord, Coord], bounds: Coord) -> list[Coord]:

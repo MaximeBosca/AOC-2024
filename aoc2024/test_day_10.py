@@ -3,8 +3,8 @@ from aoc2024.commons import load_data
 
 DAY_NUMBER = '10'
 TEST_PREFIX = 'test_'
-EXPECTED_PART_ONE = 0
-EXPECTED_PART_TWO = 0
+EXPECTED_PART_ONE = 36
+EXPECTED_PART_TWO = 81
 
 
 def test_part_one():

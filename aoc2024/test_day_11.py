@@ -3,7 +3,7 @@ from aoc2024.commons import load_data
 
 DAY_NUMBER = '11'
 TEST_PREFIX = 'test_'
-EXPECTED_PART_ONE = 0
+EXPECTED_PART_ONE = 55312
 EXPECTED_PART_TWO = 0
 
 
